@@ -14,7 +14,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2 style="color: blue">Search for a username</h2>
-            <h6 class="mb-4">Threads, Tiktok</h6>
+            <h6 class="mb-4">Threads, Tiktok, Facebook and Instagram</h6>
             <div class="form-group">
                 <label for="textInput">Username</label>
                 <input x-model="username" class="form-control" id="textInput" name="textInput" type="text" placeholder="Enter username">
