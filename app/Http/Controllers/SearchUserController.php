@@ -13,21 +13,13 @@ use Throwable;
 class SearchUserController extends Controller
 {
     private array $accounts_url;
-    /**
-     * @var array|string[]
-     */
-    private array $accounts_url2;
+
 
     public function __construct()
     {
         $this->accounts_url = [
             'Tiktok' => ['url' => 'https://www.tiktok.com/@'],
             'Threads' => ['url' => 'https://www.threads.net/@'],
-        ];
-        $this->accounts_url2 = [
-            'instagram', 'snapchat', 'facebook', 'minecraft', 'linktree', 'devto', 'reddit', 'pinterest', 'twitch',
-            'medium', 'patreon', 'etsy', 'wikipedia', 'dribbble', 'steam', 'tumblr', '9gag', 'vimeo', 'behence', 'shopify',
-            'dockerhub', 'askfm', 'soundcloud', ''
         ];
     }
 
@@ -57,25 +49,29 @@ class SearchUserController extends Controller
         $found = [];
         $errors = [];
         $client = new Client();
-        $headers = [
-            'X-RapidAPI-Host' => 'check-username.p.rapidapi.com',
-            'X-RapidAPI-Key' => '8284cb5b7amshcd09f2e9cca0928p1fa537jsn4413954fae5c',
-        ];
+//        $headers = [
+//            'X-RapidAPI-Host' => 'check-username.p.rapidapi.com',
+//            'X-RapidAPI-Key' => '8284cb5b7amshcd09f2e9cca0928p1fa537jsn4413954fae5c',
+//        ];
 //        'X-RapidAPI-Key' => '79ab8a074cmshbb3f96c1977787ap17bc71jsn2ce1c5f2ce03',
 
 //        echo $response->getBody();
         $promises = [];
 
-        foreach ($this->accounts_url2 as $url) {
-            try {
-                $prom = $client->get($url_path . $url . '/' . $username, ['headers' => $headers]);
-                if (!json_decode($prom->getBody(), true)['available']){
-                    $found[] = $url;
-                }
-            } catch (Exception $exception){
-                $errors[] = [$url => $exception];
-            }
-        }
+//        try {
+//            $prom = $client->get($url_path.$username, ['headers' => $headers]);
+//            $body = json_decode($prom->getBody(), true);
+//            dd($body);
+//            if ($body){
+//                foreach ($body as $key => $item){
+//                    if ($key != 'success' && $key != 'username' && $key != 'github' && !$item){
+//                        $found[] = $key;
+//                    }
+//                }
+//            }
+//        } catch (Exception $exception){
+//            dd($exception);
+//        }
 
         foreach ($this->accounts_url as $key => $url) {
             $promises[$key] = $client->getAsync($url['url'].$username);
@@ -131,5 +127,3 @@ class SearchUserController extends Controller
         return response()->json(['status' => 1]);
     }
 }
-
-
